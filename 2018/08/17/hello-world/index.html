@@ -195,7 +195,7 @@
 <h2 id="語音訊號挖掘"><a href="#語音訊號挖掘" class="headerlink" title="語音訊號挖掘"></a>語音訊號挖掘</h2><h3 id="說話人日誌（speaker-diarization）"><a href="#說話人日誌（speaker-diarization）" class="headerlink" title="說話人日誌（speaker diarization）"></a>說話人日誌（speaker diarization）</h3><p>當我們在拍攝錄像和錄影的時候通常稱之為原始資料，必須通過資料結構化的處理（同步影音資訊、抓取重要片段）。說話人日誌在此就能將受試者（在此簡稱小孩）的聲音與受訓過的醫療人員（在此簡稱醫生）提取出來。往後可以單純分析小孩的語音或小孩對於醫生說過話的反應。<br>說話人日誌目前已成熟的做法為：<br>a. 提取說話人ivector：<br>Ivector 本身能記錄人類的聲紋特征 ：<br>$$s = m + T\omega$$</p>
 <p>S是我們錄到的聲音，m是平均的語言聲音，T是每個人說話的變異性，最後ω就是每個人的聲紋特征<br>b.    PLDA 打分：<br>前述的Ivector是代表一句話的特征，PLDA就是為兩句話的相似程度進行打分，當我們能衡量那些話相似的時候，就可以用聚類的方式歸納出哪些聲音片段是來自同一個人的PLDA model：<br>$$\omega = \mu + \phi p + \epsilon$$<br>ω是上面提到的Ivector，∅是學習到的說話人子集合， p是個高斯假設，PLDA model 衡量那些話相似的方式為：<br>$$R(\omega_{1},\omega_{2})=\frac{p(\omega_{1},\omega_{2}|\Theta_{same})}{p(\omega_{1},\omega_{2}|\Theta_{diff})}$$<br>\(R(\omega_{1},\omega_{2})\) 相似打分來自兩片段相同的幾率\(p(\omega_{1},\omega_{2}|\Theta_{same})\)除以兩片段不同的幾率\(p(\omega_{1},\omega_{2}|\Theta_{diff})\)。</p>
 <h3 id="語音模型訓練"><a href="#語音模型訓練" class="headerlink" title="語音模型訓練"></a>語音模型訓練</h3><p>說話人日誌模型之訓練肯定要有龐大的訓練數據，並且要經過遷移式學習(transfer learning)適應到我們所錄得數據上。 在此，我用了海瑞天聲的人類對話語音數據訓練了ivector提取器，以及PLDA模型，另外用了<br>遷移式學習適應到我們的錄音數據上，效果如下：</p>
-<p><img src="/2018/08/17/hello-world/result.png" alt=""></p>
+<p><img src="/2018/08/17/hello-world/images/result.png" alt=""></p>
 <p>總結：<br>我做的自閉症科研是個跨領域研究，這類的研究非常重視結果的解釋性，否則很難給予醫療上建設性的建議。這個過程我認為從原始數據中先制造出二手數據（例如：說話人日誌），才能賦予我們之後的分析有根據的意義。</p>
 
       
